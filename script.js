@@ -547,8 +547,190 @@ function initTimeline() {
     });
 }
 
+// Floating love notes system
+function initFloatingLoveNotes() {
+    const loveNotesContainer = document.getElementById('love-notes');
+
+    const loveMessages = [
+        {
+            heart: '💕',
+            text: 'Thinking of you always',
+            signature: '- Jco'
+        },
+        {
+            heart: '🥰',
+            text: 'You make my heart skip a beat',
+            signature: '- Your boyfriend'
+        },
+        {
+            heart: '💖',
+            text: 'Distance means nothing when you mean everything',
+            signature: '- Jco'
+        },
+        {
+            heart: '😘',
+            text: 'Can\'t wait to hold you tight',
+            signature: '- Your love'
+        },
+        {
+            heart: '💗',
+            text: 'You are my sunshine on cloudy days',
+            signature: '- Jco'
+        },
+        {
+            heart: '🌹',
+            text: 'Every day with you is a blessing',
+            signature: '- Your boyfriend'
+        },
+        {
+            heart: '💘',
+            text: 'My heart belongs to you forever',
+            signature: '- Jco'
+        },
+        {
+            heart: '💝',
+            text: 'You are my greatest treasure',
+            signature: '- Your love'
+        },
+        {
+            heart: '🦋',
+            text: 'You give me butterflies every time',
+            signature: '- Jco'
+        },
+        {
+            heart: '✨',
+            text: 'You make everything magical',
+            signature: '- Your boyfriend'
+        },
+        {
+            heart: '💞',
+            text: 'Together forever, no matter the distance',
+            signature: '- Jco'
+        },
+        {
+            heart: '🌟',
+            text: 'You are my brightest star',
+            signature: '- Your love'
+        }
+    ];
+
+    function createLoveNote() {
+        const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+
+        const loveNote = document.createElement('div');
+        loveNote.className = 'love-note';
+        loveNote.style.left = Math.random() * (window.innerWidth - 250) + 'px';
+        loveNote.style.animationDelay = Math.random() * 2 + 's';
+        loveNote.style.animationDuration = (Math.random() * 3 + 6) + 's';
+
+        loveNote.innerHTML = `
+            <span class="love-note-heart">${randomMessage.heart}</span>
+            <div class="love-note-text">${randomMessage.text}</div>
+            <div class="love-note-signature">${randomMessage.signature}</div>
+        `;
+
+        // Add click event to make note disappear
+        loveNote.addEventListener('click', () => {
+            loveNote.classList.add('clicked');
+            setTimeout(() => {
+                if (loveNote.parentNode) {
+                    loveNote.parentNode.removeChild(loveNote);
+                }
+            }, 500);
+        });
+
+        loveNotesContainer.appendChild(loveNote);
+
+        // Remove note after animation completes
+        setTimeout(() => {
+            if (loveNote.parentNode && !loveNote.classList.contains('clicked')) {
+                loveNote.parentNode.removeChild(loveNote);
+            }
+        }, 10000);
+    }
+
+    // Create love notes at random intervals
+    function startLoveNotes() {
+        // Create first note after a delay
+        setTimeout(createLoveNote, 3000);
+
+        // Then create notes at random intervals
+        setInterval(() => {
+            if (Math.random() < 0.3) { // 30% chance every interval
+                createLoveNote();
+            }
+        }, 8000); // Check every 8 seconds
+    }
+
+    // Start the love notes system
+    startLoveNotes();
+
+    // Create a note when user scrolls (occasionally)
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (Math.random() < 0.15) { // 15% chance on scroll
+                createLoveNote();
+            }
+        }, 1000);
+    });
+}
+
+// Check if it's October 1, 2025
+function checkDate() {
+    const today = new Date();
+    const targetDate = new Date('2025-10-01');
+
+    // Check if today is October 1, 2025
+    if (today.getFullYear() === targetDate.getFullYear() &&
+        today.getMonth() === targetDate.getMonth() &&
+        today.getDate() === targetDate.getDate()) {
+        return true;
+    }
+
+    // For testing purposes, you can uncomment this line to always show:
+    // return true;
+
+    return false;
+}
+
+// Show waiting message if not October 1
+function showWaitingMessage() {
+    document.body.innerHTML = `
+        <div style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        ">
+            <h1 style="font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 20px;">💖</h1>
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">Something Special is Coming...</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px;">This surprise will be available on October 1, 2025</p>
+            <div style="
+                background: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+            ">
+                <p style="font-size: 1rem; margin: 0;">Just a little more patience, my love ❤️</p>
+            </div>
+        </div>
+    `;
+}
+
 // Initialize all features when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if it's October 1, 2025
+    if (!checkDate()) {
+        showWaitingMessage();
+        return; // Stop here if not the right date
+    }
     // Start countdown timer
     updateCountdown();
     setInterval(updateCountdown, 1000);
@@ -577,6 +759,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize timeline
     initTimeline();
+
+    // Initialize floating love notes
+    initFloatingLoveNotes();
 
     // Add click event to scroll indicator
     const scrollIndicator = document.querySelector('.scroll-indicator');

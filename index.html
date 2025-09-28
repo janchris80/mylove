@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 2nd Monthsary, My Love</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Landing Page -->
+    <section id="landing" class="section">
+        <div class="floating-hearts"></div>
+        <div class="container">
+            <h1 class="main-title">Happy 2nd Monthsary, My Love</h1>
+            <p class="subtitle">Two months of love, laughter, and endless dreams</p>
+            <div class="scroll-indicator">
+                <span>Scroll to explore our journey</span>
+                <div class="arrow-down"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LDR Connection Section -->
+    <section id="connection" class="section">
+        <div class="container">
+            <h2 class="section-title">Connected Hearts Across Miles</h2>
+            <div class="real-map-container">
+                <div id="ldr-map"></div>
+                <div class="map-info">
+                    <div class="location-info">
+                        <div class="location pampanga-location">
+                            <div class="location-dot pampanga-dot"></div>
+                            <div class="location-text">
+                                <span class="location-name">Pampanga</span>
+                                <span class="location-subtitle">Where my heart lives</span>
+                            </div>
+                        </div>
+                        <div class="distance-display">~1,320 km apart</div>
+                        <div class="location davao-location">
+                            <div class="location-dot davao-dot"></div>
+                            <div class="location-text">
+                                <span class="location-name">Davao</span>
+                                <span class="location-subtitle">Where I am waiting</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="connection-text">No matter the distance, our hearts are always connected</p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Beautiful Memories</h2>
+            <div class="photo-grid">
+                <div class="photo-item" data-caption="Your beautiful smile that brightens my day">
+                    <img src="images/image (1).jpg" alt="Memory 1">
+                    <div class="photo-overlay">
+                        <p>Your beautiful smile that brightens my day</p>
+                    </div>
+                </div>
+                <div class="photo-item" data-caption="Every picture tells our love story">
+                    <img src="images/image (2).jpg" alt="Memory 2">
+                    <div class="photo-overlay">
+                        <p>Every picture tells our love story</p>
+                    </div>
+                </div>
+                <div class="photo-item" data-caption="You make every moment magical">
+                    <img src="images/image (3).jpg" alt="Memory 3">
+                    <div class="photo-overlay">
+                        <p>You make every moment magical</p>
+                    </div>
+                </div>
+                <div class="photo-item" data-caption="My heart belongs to you">
+                    <img src="images/image (4).jpg" alt="Memory 4">
+                    <div class="photo-overlay">
+                        <p>My heart belongs to you</p>
+                    </div>
+                </div>
+                <div class="photo-item" data-caption="Distance means nothing when you mean everything">
+                    <img src="images/image (5).jpg" alt="Memory 5">
+                    <div class="photo-overlay">
+                        <p>Distance means nothing when you mean everything</p>
+                    </div>
+                </div>
+                <div class="photo-item" data-caption="Forever grateful for you">
+                    <img src="images/image (1).jpeg" alt="Memory 6">
+                    <div class="photo-overlay">
+                        <p>Forever grateful for you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love Letter Section -->
+    <section id="letter" class="section">
+        <div class="container">
+            <h2 class="section-title">A Letter From My Heart</h2>
+            <div class="letter-container">
+                <div class="typewriter">
+                    <p id="typing-text"></p>
+                </div>
+                <div class="promises-section">
+                    <button class="reveal-btn" onclick="revealPromises()">Click to reveal my promises</button>
+                    <div class="promises-content" id="promises">
+                        <h3>When we finally meet, I promise to...</h3>
+                        <ul>
+                            <li>Ayusin ko ang budget at plano para sa next visit — this time, sure na tayo</li>
+                            <li>Yakap na mahigpit sa unang pagkikita, tapos titigan kita habang sinasabing 'mahal kita'</li>
+                            <li>Magiging honest at open ako lagi — walang tago, walang paligoy, puro totoo lang</li>
+                            <li>I'll communicate better kahit pagod o busy — kahit simpleng 'good morning' at 'good night', hindi mawawala</li>
+                            <li>Respeto at tiwala — iingatan ko ang puso mo araw-araw</li>
+                            <li>Mag-iipon ako para sa mga future dates natin at little surprises mo</li>
+                            <li>I'll be patient sa time zones, moods, at lahat ng LDR challenges — team tayo dito</li>
+                            <li>Sasamahan kita sa pangarap mo — cheerleader mo ako, lagi</li>
+                            <li>I'll take care of my health and safety para palagi akong makakapunta sa'yo</li>
+                            <li>Kapag nagkita na tayo, gagawa ako ng simpleng date na special — may bulaklak, paborito mong pagkain, at maraming pictures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Song</h2>
+            <div class="music-container">
+                <div class="music-player">
+                    <div class="song-info">
+                        <h3>Saksi ang Langit</h3>
+                        <p>by December Avenue</p>
+                        <p class="song-message">"This song reminds me of us and our love story"</p>
+                    </div>
+                    <div class="music-controls">
+                        <a href="https://open.spotify.com/search/saksi%20ang%20langit%20december%20avenue" target="_blank" class="music-btn spotify-btn">
+                            🎵 Listen on Spotify
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=saksi+ang+langit+december+avenue" target="_blank" class="music-btn youtube-btn">
+                            📺 Watch on YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section id="countdown" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Love Journey</h2>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <span class="count" id="days">0</span>
+                    <span class="label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="count" id="hours">0</span>
+                    <span class="label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="count" id="minutes">0</span>
+                    <span class="label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="count" id="seconds">0</span>
+                    <span class="label">Seconds</span>
+                </div>
+            </div>
+            <p class="countdown-text">...of loving you with all my heart</p>
+        </div>
+    </section>
+
+    <!-- Final Surprise Section -->
+    <section id="surprise" class="section">
+        <div class="container">
+            <div class="surprise-content">
+                <h2 class="final-message">I love you more every day</h2>
+                <p class="final-subtitle">Thank you for being mine, my beautiful girlfriend</p>
+                <button class="confetti-btn" onclick="launchConfetti()">Celebrate Our Love!</button>
+                <div class="confetti-container" id="confetti"></div>
+                <div class="hidden-link">
+                    <a href="#" class="secret-link">A special playlist for you</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

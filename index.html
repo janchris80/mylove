@@ -10,9 +10,40 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
+    <!-- Love Meter -->
+    <div class="love-meter">
+        <div class="love-meter-container">
+            <div class="love-meter-heart">💖</div>
+            <div class="love-meter-bar">
+                <div class="love-meter-fill"></div>
+            </div>
+            <div class="love-meter-text">Love Level</div>
+            <div class="love-meter-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="floating-nav">
+        <div class="nav-toggle" id="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="#landing" data-text="Home">🏠</a></li>
+            <li><a href="#connection" data-text="Connection">💕</a></li>
+            <li><a href="#gallery" data-text="Memories">📸</a></li>
+            <li><a href="#letter" data-text="Letter">💌</a></li>
+            <!-- <li><a href="#music" data-text="Our Song">🎵</a></li> -->
+            <li><a href="#timeline" data-text="Timeline">📅</a></li>
+            <li><a href="#countdown" data-text="Journey">⏰</a></li>
+            <li><a href="#surprise" data-text="Surprise">🎉</a></li>
+        </ul>
+    </nav>
     <!-- Landing Page -->
     <section id="landing" class="section">
         <div class="floating-hearts"></div>
+        <div class="particle-background"></div>
         <div class="container">
             <h1 class="main-title">Happy 2nd Monthsary, My Love</h1>
             <p class="subtitle">Two months of love, laughter, and endless dreams</p>
@@ -152,6 +183,59 @@
         </div>
     </section>
 
+    <!-- Memory Timeline Section -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Love Story Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-item" data-date="January 2025">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>We First Met Online</h3>
+                        <p>The day our virtual love story began. Little did we know this would change our lives forever.</p>
+                        <span class="timeline-icon">👋</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-date="August 1, 2025">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>You Said Yes!</h3>
+                        <p>The happiest day of my life when you accepted me as your boyfriend. My heart was so full of joy!</p>
+                        <span class="timeline-icon">💕</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-date="September 2025">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>First Visit Plan (Failed)</h3>
+                        <p>I tried to visit you but failed due to budget and poor planning. But this made me more determined!</p>
+                        <span class="timeline-icon">✈️</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-date="October 1, 2025">
+                    <div class="timeline-dot active"></div>
+                    <div class="timeline-content">
+                        <h3>2nd Monthsary</h3>
+                        <p>Today! Two months of loving you and creating this special website just for you, my love.</p>
+                        <span class="timeline-icon">🎉</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item future" data-date="Soon...">
+                    <div class="timeline-dot future"></div>
+                    <div class="timeline-content">
+                        <h3>When We Finally Meet</h3>
+                        <p>The day I'll hold you in my arms and tell you face-to-face how much I love you. This is our future!</p>
+                        <span class="timeline-icon">🤗</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Countdown Section -->
     <section id="countdown" class="section">
         <div class="container">
@@ -192,6 +276,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modal-image" src="" alt="Memory">
+            <div class="modal-caption">
+                <h3 id="modal-title"></h3>
+                <p id="modal-description"></p>
+            </div>
+            <div class="modal-navigation">
+                <button class="modal-nav-btn" id="prev-btn">❮</button>
+                <button class="modal-nav-btn" id="next-btn">❯</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

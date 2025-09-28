@@ -90,6 +90,47 @@ function launchConfetti() {
     }, 5000);
 }
 
+// Create animated particles
+function createParticles() {
+    const particleContainer = document.querySelector('.particle-background');
+
+    function addParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = Math.random() * 4 + 6 + 's';
+        particle.style.animationDelay = Math.random() * 2 + 's';
+
+        // Random particle types
+        const particleTypes = ['•', '✦', '✧', '⭐', '◦'];
+        const randomType = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+
+        if (randomType !== '•') {
+            particle.innerHTML = randomType;
+            particle.style.background = 'none';
+            particle.style.color = `rgba(255, 255, 255, ${Math.random() * 0.8 + 0.2})`;
+            particle.style.fontSize = Math.random() * 8 + 8 + 'px';
+        }
+
+        particleContainer.appendChild(particle);
+
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 10000);
+    }
+
+    // Create particles continuously
+    setInterval(addParticle, 500);
+
+    // Initial particles
+    for (let i = 0; i < 10; i++) {
+        setTimeout(addParticle, i * 200);
+    }
+}
+
 // Create floating hearts
 function createFloatingHearts() {
     const heartsContainer = document.querySelector('.floating-hearts');
@@ -156,15 +197,116 @@ function setupScrollAnimations() {
     });
 }
 
-// Initialize photo gallery hover effects
+// Photo gallery data for modal
+const galleryData = [
+    {
+        src: 'images/image (1).jpg',
+        title: 'Your Beautiful Smile',
+        description: 'Your beautiful smile that brightens my day'
+    },
+    {
+        src: 'images/image (2).jpg',
+        title: 'Our Love Story',
+        description: 'Every picture tells our love story'
+    },
+    {
+        src: 'images/image (3).jpg',
+        title: 'Magical Moments',
+        description: 'You make every moment magical'
+    },
+    {
+        src: 'images/image (4).jpg',
+        title: 'My Heart Belongs To You',
+        description: 'My heart belongs to you'
+    },
+    {
+        src: 'images/image (5).jpg',
+        title: 'Distance Means Nothing',
+        description: 'Distance means nothing when you mean everything'
+    },
+    {
+        src: 'images/image (1).jpeg',
+        title: 'Forever Grateful',
+        description: 'Forever grateful for you'
+    }
+];
+
+let currentImageIndex = 0;
+
+// Initialize photo gallery with modal functionality
 function initPhotoGallery() {
     const photoItems = document.querySelectorAll('.photo-item');
+    const modal = document.getElementById('photo-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const closeBtn = document.querySelector('.modal-close');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
 
-    photoItems.forEach(item => {
-        // Set initial state for animation
+    // Set initial state for animation
+    photoItems.forEach((item, index) => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(30px)';
         item.style.transition = 'all 0.6s ease';
+
+        // Add click event to open modal
+        item.addEventListener('click', () => {
+            currentImageIndex = index;
+            openModal();
+        });
+    });
+
+    // Modal functions
+    function openModal() {
+        const imageData = galleryData[currentImageIndex];
+        modalImage.src = imageData.src;
+        modalTitle.textContent = imageData.title;
+        modalDescription.textContent = imageData.description;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+        const imageData = galleryData[currentImageIndex];
+        modalImage.src = imageData.src;
+        modalTitle.textContent = imageData.title;
+        modalDescription.textContent = imageData.description;
+    }
+
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+        const imageData = galleryData[currentImageIndex];
+        modalImage.src = imageData.src;
+        modalTitle.textContent = imageData.title;
+        modalDescription.textContent = imageData.description;
+    }
+
+    // Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', showPrevImage);
+    nextBtn.addEventListener('click', showNextImage);
+
+    // Close modal when clicking outside image
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (modal.style.display === 'block') {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') showPrevImage();
+            if (e.key === 'ArrowRight') showNextImage();
+        }
     });
 }
 
@@ -240,14 +382,180 @@ function initLDRMap() {
     map.fitBounds(group.getBounds().pad(0.1));
 }
 
+// Initialize navigation
+function initNavigation() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    // Toggle navigation menu
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // Smooth scroll to sections
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Close menu after click
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+
+    // Highlight active section
+    function highlightActiveSection() {
+        const sections = document.querySelectorAll('.section');
+        const scrollPos = window.scrollY + 100;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            const correspondingLink = document.querySelector(`.nav-menu a[href="#${sectionId}"]`);
+
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                }
+            }
+        });
+    }
+
+    window.addEventListener('scroll', highlightActiveSection);
+}
+
+// Initialize love meter
+function initLoveMeter() {
+    const loveMeterFill = document.querySelector('.love-meter-fill');
+    const loveMeterPercentage = document.querySelector('.love-meter-percentage');
+    const loveMeterHeart = document.querySelector('.love-meter-heart');
+
+    function updateLoveMeter() {
+        const scrollTop = window.pageYOffset;
+        const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = Math.min((scrollTop / documentHeight) * 100, 100);
+
+        // Update the fill bar
+        loveMeterFill.style.height = scrollPercent + '%';
+
+        // Update percentage text
+        loveMeterPercentage.textContent = Math.round(scrollPercent) + '%';
+
+        // Change heart based on love level
+        if (scrollPercent >= 90) {
+            loveMeterHeart.textContent = '💘'; // Arrow through heart
+        } else if (scrollPercent >= 70) {
+            loveMeterHeart.textContent = '💕'; // Two hearts
+        } else if (scrollPercent >= 50) {
+            loveMeterHeart.textContent = '💖'; // Sparkling heart
+        } else if (scrollPercent >= 30) {
+            loveMeterHeart.textContent = '💗'; // Growing heart
+        } else {
+            loveMeterHeart.textContent = '🤍'; // White heart (starting)
+        }
+
+        // Add special effects at milestones
+        if (scrollPercent >= 100) {
+            loveMeterFill.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.8)';
+            loveMeterHeart.style.animation = 'heartBeat 0.5s infinite';
+        } else {
+            loveMeterFill.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+            loveMeterHeart.style.animation = 'heartBeat 2s infinite';
+        }
+    }
+
+    window.addEventListener('scroll', updateLoveMeter);
+    updateLoveMeter(); // Initial call
+}
+
+// Initialize timeline animations
+function initTimeline() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    function animateTimeline() {
+        timelineItems.forEach((item, index) => {
+            const itemTop = item.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (itemTop < windowHeight * 0.8) {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, index * 200); // Stagger animation
+            }
+        });
+    }
+
+    // Initial check
+    animateTimeline();
+
+    // Check on scroll
+    window.addEventListener('scroll', animateTimeline);
+
+    // Add click interactions for timeline items
+    timelineItems.forEach(item => {
+        const content = item.querySelector('.timeline-content');
+        const icon = item.querySelector('.timeline-icon');
+
+        content.addEventListener('click', () => {
+            // Add a special click effect
+            icon.style.transform = 'scale(1.3) rotate(360deg)';
+            content.style.background = 'linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 255, 255, 0.9))';
+
+            setTimeout(() => {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+                content.style.background = '';
+            }, 500);
+        });
+
+        // Hover effects for timeline dots
+        item.addEventListener('mouseenter', () => {
+            const dot = item.querySelector('.timeline-dot');
+            if (!dot.classList.contains('active')) {
+                dot.style.background = '#ff6b6b';
+                dot.style.borderColor = '#fff';
+            }
+        });
+
+        item.addEventListener('mouseleave', () => {
+            const dot = item.querySelector('.timeline-dot');
+            if (!dot.classList.contains('active') && !dot.classList.contains('future')) {
+                dot.style.background = '#fff';
+                dot.style.borderColor = '#ff6b6b';
+            }
+        });
+    });
+}
+
 // Initialize all features when page loads
 document.addEventListener('DOMContentLoaded', function() {
     // Start countdown timer
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Create floating hearts
+    // Create floating hearts and particles
     createFloatingHearts();
+    createParticles();
 
     // Setup scroll animations
     setupScrollAnimations();
@@ -260,6 +568,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the LDR map
     initLDRMap();
+
+    // Initialize navigation
+    initNavigation();
+
+    // Initialize love meter
+    initLoveMeter();
+
+    // Initialize timeline
+    initTimeline();
 
     // Add click event to scroll indicator
     const scrollIndicator = document.querySelector('.scroll-indicator');

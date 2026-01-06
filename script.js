@@ -679,20 +679,13 @@ function initFloatingLoveNotes() {
 
 // Check if it's October 1, 2025
 function checkDate() {
-    const today = new Date();
-    const targetDate = new Date('2025-10-01');
+    const now = new Date();
 
-    // Check if today is October 1, 2025
-    if (today.getFullYear() === targetDate.getFullYear() &&
-        today.getMonth() === targetDate.getMonth() &&
-        today.getDate() === targetDate.getDate()) {
-        return true;
-    }
+    // "Unlock date" (Oct 1, 2025 at 00:00 local time)
+    const targetDate = new Date(2025, 9, 1); // month is 0-based: 9 = October
 
-    // For testing purposes, you can uncomment this line to always show:
-    // return true;
-
-    return false;
+    // true if NOT YET Oct 1, 2025
+    return now < targetDate;
 }
 
 // Show waiting message if not October 1
